@@ -92,62 +92,44 @@ Claude Codeは、自然言語での指示を理解し、以下のように動作
 2. ファイル名は、タイトルから自動生成（スラッグ化）
 3. フロントマター（title, date, author, description）を設定
 4. 本文を記述
-5. 変更をフィーチャーブランチにコミットしてプッシュ
-6. **mainブランチにマージしてプッシュ**（GitHub Pagesに反映）
+5. 変更をコミットしてプッシュ
+6. **GitHub Actionsが自動的にビルド＆デプロイ**（GitHub Pagesに反映）
 
 ### 記事編集時の動作
 
 1. 指定されたファイルを`src/content/blog/`から読み込み
 2. 変更内容を反映
-3. 変更をフィーチャーブランチにコミットしてプッシュ
-4. **mainブランチにマージしてプッシュ**（GitHub Pagesに反映）
+3. 変更をコミットしてプッシュ
+4. **GitHub Actionsが自動的にビルド＆デプロイ**（GitHub Pagesに反映）
 
 ### 記事削除時の動作
 
 1. 指定されたファイルを`src/content/blog/`から削除
-2. 変更をフィーチャーブランチにコミットしてプッシュ
-3. **mainブランチにマージしてプッシュ**（GitHub Pagesに反映）
+2. 変更をコミットしてプッシュ
+3. **GitHub Actionsが自動的にビルド＆デプロイ**（GitHub Pagesに反映）
 
 ### コード変更時の動作
 
 レイアウトやスタイル、コンポーネントなどのコードを変更した場合も同様に：
 
-1. 変更をフィーチャーブランチにコミットしてプッシュ
-2. **mainブランチにマージしてプッシュ**（GitHub Pagesに反映）
+1. 変更をコミットしてプッシュ
+2. **GitHub Actionsが自動的にビルド＆デプロイ**（GitHub Pagesに反映）
 
 ## 重要：変更のデプロイ
 
-**記事の作成・編集・削除、またはコードの変更を行った場合は、必ずmainブランチにマージしてください。**
-
-これにより、GitHub Actionsが自動的にビルドを実行し、変更がGitHub Pagesに反映されます。
+**記事の作成・編集・削除、またはコードの変更を行った場合、変更をプッシュするだけで自動的にGitHub Pagesにデプロイされます。**
 
 ### デプロイの流れ
 
-mainブランチへの直接プッシュは制限されているため、**プルリクエスト経由でマージ**します。
+このブログは`claude/astro-blog-github-pages-011CUidNjz2bhqEsv1Psn9k8`ブランチへのプッシュで自動的にデプロイされるように設定されています。
 
-1. フィーチャーブランチ（`claude/astro-blog-github-pages-*`）で作業
+1. フィーチャーブランチ（`claude/astro-blog-github-pages-011CUidNjz2bhqEsv1Psn9k8`）で作業
 2. 変更をコミット＆プッシュ
-3. **GitHubでプルリクエストを作成**（フィーチャーブランチ → main）
-4. **プルリクエストをマージ**
-5. GitHub Actionsが自動的にビルド＆デプロイ
-6. 数分後に https://kokushin.github.io/cccms/ で変更が反映される
+3. **GitHub Actionsが自動的に起動**
+4. ビルドが完了すると自動的にGitHub Pagesにデプロイ
+5. 数分後に https://kokushin.github.io/cccms/ で変更が反映される
 
-### プルリクエストの作成方法
-
-Claude Codeが変更をプッシュした後、以下の手順でプルリクエストを作成できます：
-
-**方法1: GitHubのWebインターフェース**
-1. https://github.com/kokushin/cccms にアクセス
-2. 「Compare & pull request」ボタンをクリック
-3. タイトルと説明を確認してプルリクエストを作成
-4. 「Merge pull request」をクリックしてマージ
-
-**方法2: Claude Codeに依頼**
-```
-プルリクエストを作成してmainにマージしてください
-```
-
-と指示すると、Claude Codeが`gh`コマンドを使ってプルリクエストの作成とマージを行います。
+**mainブランチへのマージは不要です。** フィーチャーブランチへのプッシュだけでデプロイが完了します。
 
 ## ファイル構造
 

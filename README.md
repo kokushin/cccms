@@ -90,7 +90,9 @@ cccms/
 
 1. GitHubリポジトリの設定で、GitHub Pagesを有効にします
 2. Source を "GitHub Actions" に設定します
-3. mainブランチにプッシュすると、自動的にビルド＆デプロイされます
+3. `claude/astro-blog-github-pages-011CUidNjz2bhqEsv1Psn9k8`ブランチにプッシュすると、自動的にビルド＆デプロイされます
+
+**mainブランチへのマージは不要です。** フィーチャーブランチへのプッシュだけでデプロイが完了します。
 
 ## 技術スタック
 

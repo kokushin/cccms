@@ -2,7 +2,7 @@ name: Deploy to GitHub Pages
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ claude/astro-blog-github-pages-011CUidNjz2bhqEsv1Psn9k8 ]
   workflow_dispatch:
 
 permissions:
