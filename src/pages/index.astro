@@ -1,0 +1,55 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// ブログ記事を取得
+const allPosts = await getCollection('blog');
+
+// 日付順にソート（新しい順）
+const posts = allPosts
+  .sort((a, b) => new Date(b.data.date).getTime() - new Date(a.data.date).getTime())
+  .map(post => ({
+    url: `/cccms/blog/${post.slug}/`,
+    frontmatter: post.data
+  }));
+---
+
+<BaseLayout title="Home - My Blog">
+  <section>
+    <h2 style="font-size: 2em; margin-bottom: 1em;">Welcome to My Blog</h2>
+    <p style="font-size: 1.1em; margin-bottom: 2em;">
+      Claude Code on the webで管理する、シンプルな静的ブログです。
+    </p>
+
+    <h3 style="font-size: 1.5em; margin-bottom: 1em;">最新の記事</h3>
+    {posts.length === 0 ? (
+      <p style="color: #666;">まだ記事がありません。</p>
+    ) : (
+      <ul style="list-style: none; padding: 0;">
+        {posts.slice(0, 5).map((post) => (
+          <li style="margin-bottom: 1.5em; padding-bottom: 1.5em; border-bottom: 1px solid #eee;">
+            <a href={post.url} style="text-decoration: none; color: inherit;">
+              <h4 style="font-size: 1.3em; color: #0066cc; margin-bottom: 0.3em;">
+                {post.frontmatter.title}
+              </h4>
+              <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5em;">
+                {post.frontmatter.date}
+              </p>
+              {post.frontmatter.description && (
+                <p style="color: #555;">{post.frontmatter.description}</p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+
+    {posts.length > 5 && (
+      <p style="margin-top: 2em;">
+        <a href="/cccms/blog/" style="color: #0066cc; text-decoration: none;">
+          すべての記事を見る →
+        </a>
+      </p>
+    )}
+  </section>
+</BaseLayout>

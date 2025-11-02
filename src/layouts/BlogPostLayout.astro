@@ -1,0 +1,87 @@
+---
+import BaseLayout from './BaseLayout.astro';
+
+const { frontmatter } = Astro.props;
+---
+
+<BaseLayout title={frontmatter.title}>
+  <article>
+    <header style="margin-bottom: 2em;">
+      <h1 style="font-size: 2.5em; margin-bottom: 0.5em;">{frontmatter.title}</h1>
+      <div style="color: #666; font-size: 0.9em;">
+        <time>{frontmatter.date}</time>
+        {frontmatter.author && <span> • {frontmatter.author}</span>}
+      </div>
+      {frontmatter.description && (
+        <p style="margin-top: 1em; font-size: 1.1em; color: #555;">{frontmatter.description}</p>
+      )}
+    </header>
+
+    <div style="line-height: 1.8;">
+      <slot />
+    </div>
+  </article>
+
+  <style>
+    article :global(h2) {
+      font-size: 1.8em;
+      margin: 1.5em 0 0.5em;
+      border-bottom: 1px solid #eee;
+      padding-bottom: 0.3em;
+    }
+
+    article :global(h3) {
+      font-size: 1.4em;
+      margin: 1.3em 0 0.5em;
+    }
+
+    article :global(p) {
+      margin: 1em 0;
+    }
+
+    article :global(ul), article :global(ol) {
+      margin: 1em 0;
+      padding-left: 2em;
+    }
+
+    article :global(li) {
+      margin: 0.5em 0;
+    }
+
+    article :global(code) {
+      background: #f4f4f4;
+      padding: 0.2em 0.4em;
+      border-radius: 3px;
+      font-size: 0.9em;
+    }
+
+    article :global(pre) {
+      background: #f4f4f4;
+      padding: 1em;
+      border-radius: 5px;
+      overflow-x: auto;
+      margin: 1em 0;
+    }
+
+    article :global(pre code) {
+      background: none;
+      padding: 0;
+    }
+
+    article :global(blockquote) {
+      border-left: 4px solid #ddd;
+      padding-left: 1em;
+      margin: 1em 0;
+      color: #666;
+    }
+
+    article :global(a) {
+      color: #0066cc;
+      text-decoration: none;
+    }
+
+    article :global(a:hover) {
+      text-decoration: underline;
+    }
+  </style>
+</BaseLayout>

@@ -1,0 +1,41 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+
+// すべてのブログ記事を取得
+const allPosts = await getCollection('blog');
+
+// 日付順にソート（新しい順）
+const posts = allPosts.sort((a, b) =>
+  new Date(b.data.date).getTime() - new Date(a.data.date).getTime()
+);
+---
+
+<BaseLayout title="Blog - My Blog">
+  <section>
+    <h2 style="font-size: 2em; margin-bottom: 1.5em;">すべての記事</h2>
+
+    {posts.length === 0 ? (
+      <p style="color: #666;">まだ記事がありません。</p>
+    ) : (
+      <ul style="list-style: none; padding: 0;">
+        {posts.map((post) => (
+          <li style="margin-bottom: 2em; padding-bottom: 2em; border-bottom: 1px solid #eee;">
+            <a href={`/cccms/blog/${post.slug}/`} style="text-decoration: none; color: inherit;">
+              <h3 style="font-size: 1.5em; color: #0066cc; margin-bottom: 0.5em;">
+                {post.data.title}
+              </h3>
+              <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5em;">
+                {post.data.date}
+                {post.data.author && <span> • {post.data.author}</span>}
+              </p>
+              {post.data.description && (
+                <p style="color: #555; line-height: 1.6;">{post.data.description}</p>
+              )}
+            </a>
+          </li>
+        ))}
+      </ul>
+    )}
+  </section>
+</BaseLayout>
