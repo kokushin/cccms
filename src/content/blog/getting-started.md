@@ -1,7 +1,7 @@
 ---
 title: "はじめに - Astroとは"
 date: "2025-11-01"
-author: "Blog Admin"
+author: "@kokushing"
 description: "Astroについて簡単に紹介します。なぜAstroを選んだのか、その利点について説明します。"
 ---
 

@@ -15,41 +15,204 @@ const posts = allPosts
 ---
 
 <BaseLayout title="Home - My Blog">
-  <section>
-    <h2 style="font-size: 2em; margin-bottom: 1em;">Welcome to My Blog</h2>
-    <p style="font-size: 1.1em; margin-bottom: 2em;">
-      Claude Code on the webで管理する、シンプルな静的ブログです。
-    </p>
-
-    <h3 style="font-size: 1.5em; margin-bottom: 1em;">最新の記事</h3>
-    {posts.length === 0 ? (
-      <p style="color: #666;">まだ記事がありません。</p>
-    ) : (
-      <ul style="list-style: none; padding: 0;">
-        {posts.slice(0, 5).map((post) => (
-          <li style="margin-bottom: 1.5em; padding-bottom: 1.5em; border-bottom: 1px solid #eee;">
-            <a href={post.url} style="text-decoration: none; color: inherit;">
-              <h4 style="font-size: 1.3em; color: #0066cc; margin-bottom: 0.3em;">
-                {post.frontmatter.title}
-              </h4>
-              <p style="color: #666; font-size: 0.9em; margin-bottom: 0.5em;">
-                {post.frontmatter.date}
-              </p>
-              {post.frontmatter.description && (
-                <p style="color: #555;">{post.frontmatter.description}</p>
-              )}
-            </a>
-          </li>
-        ))}
-      </ul>
-    )}
-
-    {posts.length > 5 && (
-      <p style="margin-top: 2em;">
-        <a href="/cccms/blog/" style="color: #0066cc; text-decoration: none;">
-          すべての記事を見る →
-        </a>
+  <section class="home-section">
+    <div class="hero">
+      <h2 class="hero-title">Welcome to My Blog</h2>
+      <p class="hero-description">
+        Claude Code on the webで管理する、シンプルな静的ブログです。
       </p>
-    )}
+    </div>
+
+    <div class="posts-section">
+      <h3 class="section-title">最新の記事</h3>
+      {posts.length === 0 ? (
+        <p class="empty-state">まだ記事がありません。</p>
+      ) : (
+        <ul class="posts-list">
+          {posts.slice(0, 5).map((post) => (
+            <li class="post-item">
+              <a href={post.url} class="post-link">
+                <h4 class="post-item-title">
+                  {post.frontmatter.title}
+                </h4>
+                <p class="post-item-date">
+                  {post.frontmatter.date}
+                </p>
+                {post.frontmatter.description && (
+                  <p class="post-item-description">{post.frontmatter.description}</p>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+
+      {posts.length > 5 && (
+        <div class="view-all">
+          <a href="/cccms/blog/" class="view-all-link">
+            すべての記事を見る →
+          </a>
+        </div>
+      )}
+    </div>
   </section>
+
+  <style>
+    .home-section {
+      max-width: 48rem;
+      margin: 0 auto;
+    }
+
+    .hero {
+      margin-bottom: 3rem;
+    }
+
+    @media (min-width: 768px) {
+      .hero {
+        margin-bottom: 4rem;
+      }
+    }
+
+    .hero-title {
+      font-size: 2rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+      color: var(--color-text);
+      line-height: 1.2;
+    }
+
+    @media (min-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+    }
+
+    .hero-description {
+      font-size: 1.125rem;
+      color: var(--color-text-light);
+      line-height: 1.6;
+    }
+
+    @media (min-width: 768px) {
+      .hero-description {
+        font-size: 1.25rem;
+      }
+    }
+
+    .posts-section {
+      margin-top: 2rem;
+    }
+
+    .section-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1.5rem;
+      color: var(--color-text);
+    }
+
+    @media (min-width: 768px) {
+      .section-title {
+        font-size: 1.875rem;
+        margin-bottom: 2rem;
+      }
+    }
+
+    .empty-state {
+      color: var(--color-text-light);
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .posts-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .post-item {
+      margin-bottom: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid var(--color-border);
+    }
+
+    .post-item:last-child {
+      border-bottom: none;
+    }
+
+    .post-link {
+      display: block;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 0.2s;
+    }
+
+    .post-link:hover {
+      transform: translateX(4px);
+    }
+
+    .post-item-title {
+      font-size: 1.25rem;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+    }
+
+    @media (min-width: 768px) {
+      .post-item-title {
+        font-size: 1.5rem;
+      }
+    }
+
+    .post-item-date {
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+      margin-bottom: 0.75rem;
+    }
+
+    @media (min-width: 768px) {
+      .post-item-date {
+        font-size: 0.9rem;
+      }
+    }
+
+    .post-item-description {
+      color: var(--color-text);
+      line-height: 1.6;
+      font-size: 0.9375rem;
+    }
+
+    @media (min-width: 768px) {
+      .post-item-description {
+        font-size: 1rem;
+      }
+    }
+
+    .view-all {
+      margin-top: 2.5rem;
+      text-align: center;
+    }
+
+    @media (min-width: 768px) {
+      .view-all {
+        margin-top: 3rem;
+      }
+    }
+
+    .view-all-link {
+      display: inline-block;
+      color: var(--color-primary);
+      text-decoration: none;
+      font-weight: 600;
+      padding: 0.75rem 1.5rem;
+      border: 2px solid var(--color-primary);
+      border-radius: 0.5rem;
+      transition: all 0.2s;
+    }
+
+    .view-all-link:hover {
+      background-color: var(--color-primary);
+      color: white;
+    }
+  </style>
 </BaseLayout>

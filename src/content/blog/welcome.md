@@ -1,7 +1,7 @@
 ---
 title: "ブログへようこそ"
 date: "2025-11-02"
-author: "Blog Admin"
+author: "@kokushing"
 description: "Claude Code on the webで管理する静的ブログシステムへようこそ。このブログの特徴と使い方をご紹介します。"
 ---
 

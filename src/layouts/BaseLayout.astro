@@ -1,5 +1,13 @@
 ---
+import MobileNav from '../components/MobileNav';
+
 const { title = 'My Blog' } = Astro.props;
+const currentPath = Astro.url.pathname;
+
+const navigation = [
+  { name: 'Home', href: '/cccms/', current: false },
+  { name: 'Blog', href: '/cccms/blog/', current: false },
+];
 ---
 
 <!DOCTYPE html>
@@ -7,69 +15,238 @@ const { title = 'My Blog' } = Astro.props;
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+  <link rel="icon" type="image/jpeg" href="https://pbs.twimg.com/profile_images/1920897142874341376/ya_CCg1k_400x400.jpg">
   <title>{title}</title>
-  <style>
+  <style is:global>
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --color-primary: #3b82f6;
+      --color-primary-dark: #2563eb;
+      --color-text: #111827;
+      --color-text-light: #6b7280;
+      --color-border: #e5e7eb;
+      --color-bg: #ffffff;
+      --color-bg-secondary: #f9fafb;
+      --spacing-unit: 1rem;
+    }
+
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
       line-height: 1.6;
-      color: #333;
-      max-width: 800px;
+      color: var(--color-text);
+      background-color: var(--color-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Mobile Navigation Styles */
+    .mobile-nav {
+      background-color: var(--color-bg);
+      border-bottom: 1px solid var(--color-border);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-container {
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 20px;
+      padding: 0 1rem;
     }
 
-    header {
-      border-bottom: 2px solid #333;
-      padding-bottom: 20px;
-      margin-bottom: 40px;
+    .nav-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 4rem;
     }
 
-    h1 {
-      font-size: 2em;
-      margin-bottom: 10px;
+    .nav-left {
+      display: flex;
+      align-items: center;
     }
 
-    nav {
-      margin-top: 20px;
-    }
-
-    nav a {
-      color: #0066cc;
+    .logo {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--color-text);
       text-decoration: none;
-      margin-right: 20px;
+      transition: color 0.2s;
     }
 
-    nav a:hover {
-      text-decoration: underline;
+    .logo:hover {
+      color: var(--color-primary);
     }
 
+    /* Desktop Navigation */
+    .nav-desktop {
+      display: none;
+      gap: 2rem;
+    }
+
+    @media (min-width: 768px) {
+      .nav-desktop {
+        display: flex;
+      }
+    }
+
+    .nav-link {
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 0;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .nav-link:hover {
+      color: var(--color-primary);
+    }
+
+    .nav-link.active {
+      color: var(--color-primary);
+      border-bottom-color: var(--color-primary);
+    }
+
+    /* Mobile Menu Button */
+    .nav-mobile-button {
+      display: flex;
+    }
+
+    @media (min-width: 768px) {
+      .nav-mobile-button {
+        display: none;
+      }
+    }
+
+    .menu-button {
+      background: none;
+      border: none;
+      padding: 0.5rem;
+      color: var(--color-text);
+      cursor: pointer;
+      border-radius: 0.375rem;
+      transition: background-color 0.2s;
+    }
+
+    .menu-button:hover {
+      background-color: var(--color-bg-secondary);
+    }
+
+    .menu-button .icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    /* Mobile Panel */
+    .mobile-panel {
+      display: block;
+      border-top: 1px solid var(--color-border);
+    }
+
+    @media (min-width: 768px) {
+      .mobile-panel {
+        display: none;
+      }
+    }
+
+    .mobile-menu {
+      padding: 0.5rem 0;
+    }
+
+    .mobile-link {
+      display: block;
+      padding: 0.75rem 1rem;
+      color: var(--color-text-light);
+      text-decoration: none;
+      font-weight: 500;
+      border-left: 3px solid transparent;
+      transition: all 0.2s;
+    }
+
+    .mobile-link:hover {
+      background-color: var(--color-bg-secondary);
+      color: var(--color-primary);
+      border-left-color: var(--color-primary);
+    }
+
+    .mobile-link.active {
+      background-color: var(--color-bg-secondary);
+      color: var(--color-primary);
+      border-left-color: var(--color-primary);
+    }
+
+    /* Main Content */
     main {
-      min-height: 60vh;
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 1.5rem 1rem;
+      min-height: calc(100vh - 16rem);
     }
 
+    @media (min-width: 768px) {
+      main {
+        padding: 2.5rem 2rem;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      main {
+        padding: 3rem 2rem;
+      }
+    }
+
+    /* Footer */
     footer {
-      margin-top: 60px;
-      padding-top: 20px;
-      border-top: 1px solid #ddd;
+      margin-top: 4rem;
+      padding: 2rem 1rem;
+      border-top: 1px solid var(--color-border);
+      background-color: var(--color-bg-secondary);
+    }
+
+    footer p {
+      max-width: 1280px;
+      margin: 0 auto;
       text-align: center;
-      color: #666;
+      color: var(--color-text-light);
+      font-size: 0.875rem;
+    }
+
+    /* Utility Classes */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    @media (min-width: 768px) {
+      .container {
+        padding: 0 2rem;
+      }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1><a href="/cccms/" style="color: inherit; text-decoration: none;">My Blog</a></h1>
-    <nav>
-      <a href="/cccms/">Home</a>
-      <a href="/cccms/blog/">Blog</a>
-    </nav>
-  </header>
+  <MobileNav navigation={navigation} currentPath={currentPath} client:load />
 
   <main>
     <slot />
