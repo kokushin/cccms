@@ -123,13 +123,31 @@ Claude Codeは、自然言語での指示を理解し、以下のように動作
 
 ### デプロイの流れ
 
+mainブランチへの直接プッシュは制限されているため、**プルリクエスト経由でマージ**します。
+
 1. フィーチャーブランチ（`claude/astro-blog-github-pages-*`）で作業
 2. 変更をコミット＆プッシュ
-3. **mainブランチにチェックアウト**
-4. **フィーチャーブランチをmainにマージ**
-5. **mainブランチにプッシュ**
-6. GitHub Actionsが自動的にビルド＆デプロイ
-7. 数分後にhttps://kokushin.github.io/cccms/で変更が反映される
+3. **GitHubでプルリクエストを作成**（フィーチャーブランチ → main）
+4. **プルリクエストをマージ**
+5. GitHub Actionsが自動的にビルド＆デプロイ
+6. 数分後に https://kokushin.github.io/cccms/ で変更が反映される
+
+### プルリクエストの作成方法
+
+Claude Codeが変更をプッシュした後、以下の手順でプルリクエストを作成できます：
+
+**方法1: GitHubのWebインターフェース**
+1. https://github.com/kokushin/cccms にアクセス
+2. 「Compare & pull request」ボタンをクリック
+3. タイトルと説明を確認してプルリクエストを作成
+4. 「Merge pull request」をクリックしてマージ
+
+**方法2: Claude Codeに依頼**
+```
+プルリクエストを作成してmainにマージしてください
+```
+
+と指示すると、Claude Codeが`gh`コマンドを使ってプルリクエストの作成とマージを行います。
 
 ## ファイル構造
 
